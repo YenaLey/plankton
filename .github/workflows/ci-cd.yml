@@ -1,0 +1,135 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  # backend-build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v2
+
+  #     - name: Set up JDK
+  #       uses: actions/setup-java@v2
+  #       with:
+  #         java-version: "21"
+  #         distribution: "temurin"
+
+  #     - name: Cache Gradle packages
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/.gradle/caches
+  #         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-gradle-
+
+  #     - name: Cache Gradle wrapper
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/.gradle/wrapper
+  #         key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-gradle-wrapper-
+
+  #     - name: Make application-prod.yml
+  #       if: contains(github.ref, 'main')
+  #       run: |
+  #         cd ./backend/src/main/resources
+  #         echo "${{ secrets.YML_PROD }}" > ./application-prod.yml
+  #       shell: bash
+
+  #     - name: Build the project
+  #       working-directory: backend
+  #       run: ./gradlew build --no-daemon
+
+  # backend-test:
+  #   runs-on: ubuntu-latest
+  #   needs: backend-build
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v2
+
+  #     - name: Set up JDK
+  #       uses: actions/setup-java@v2
+  #       with:
+  #         java-version: "21"
+  #         distribution: "temurin"
+
+  #     - name: Cache Gradle packages
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/.gradle/caches
+  #         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-gradle-
+
+  #     - name: Cache Gradle wrapper
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/.gradle/wrapper
+  #         key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-gradle-wrapper-
+
+  #     - name: Run Tests
+  #       working-directory: backend
+  #       run: ./gradlew test --no-daemon
+
+  # backend-deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: backend-test
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v2
+
+  #     - name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v2
+
+  #     - name: Build and run Docker Compose
+  #       working-directory: backend
+  #       run: |
+  #         docker-compose up --build -d
+
+  #     - name: Tear down Docker Compose
+  #       working-directory: backend
+  #       run: docker-compose down
+
+  # Uncomment the following lines when you're ready to deploy the backend
+  # - name: Deploy Backend
+  #   if: success()
+  #   run: |
+  #     # Deploy backend to AWS EC2
+  #     scp -i /path/to/your-key.pem -r backend/target/*.jar ec2-user@your-backend-ec2-ip:/path/to/deployment/
+  #     ssh -i /path/to/your-key.pem ec2-user@your-backend-ec2-ip "cd /path/to/deployment && java -jar your-backend-app.jar"
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Install Dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Create .env.production file
+        run: echo "REACT_APP_BASE_URL=${{ secrets.REACT_APP_BASE_URL }}" > ./frontend/.env.production
+
+      - name: Build Frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        if: success()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.PLANKTON_TOKEN }}
+          publish_dir: ./frontend/build

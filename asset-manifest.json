@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/plankton/static/css/main.a2dcfe61.css",
+    "main.js": "/plankton/static/js/main.b7bc9dd5.js",
+    "static/js/453.65b5ec2e.chunk.js": "/plankton/static/js/453.65b5ec2e.chunk.js",
+    "index.html": "/plankton/index.html",
+    "main.a2dcfe61.css.map": "/plankton/static/css/main.a2dcfe61.css.map",
+    "main.b7bc9dd5.js.map": "/plankton/static/js/main.b7bc9dd5.js.map",
+    "453.65b5ec2e.chunk.js.map": "/plankton/static/js/453.65b5ec2e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a2dcfe61.css",
+    "static/js/main.b7bc9dd5.js"
+  ]
+}
