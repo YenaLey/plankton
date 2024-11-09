@@ -1,15 +1,12 @@
-// install event
 self.addEventListener("install", (e) => {
   console.log("[Service Worker] Installed");
 });
 
-// activate event
 self.addEventListener("activate", (e) => {
   console.log("[Service Worker] Activated");
   return self.clients.claim();
 });
 
-// fetch event
 self.addEventListener("fetch", (e) => {
   e.respondWith(
     caches.match(e.request).then((response) => {
@@ -18,35 +15,31 @@ self.addEventListener("fetch", (e) => {
   );
 });
 
-// push event - 백엔드에서 받은 공지사항을 푸시 알림으로 표시
+// push 이벤트 - 푸시 알림 표시
 self.addEventListener("push", (event) => {
+  console.log("Push event received");
   if (event.data && Notification.permission === "granted") {
     const data = event.data.json();
+    console.log(data);
 
     const options = {
       body: data.content,
-      icon: data.image || "default-icon.png",
       data: {
         url: data.url,
-        title: data.title,
-        level: data.level,
-        timestamp: data.timestamp,
       },
-      badge: "badge-icon.png",
     };
 
-    if (data.level === 1) {
-      options.vibrate = [200, 100, 200];
-      options.tag = "important-notice";
-    }
-
-    event.waitUntil(self.registration.showNotification(data.title, options));
+    event.waitUntil(
+      self.registration
+        .showNotification(data.title, options)
+        .then(() => console.log("Notification displayed successfully"))
+        .catch((error) => console.error("Notification display failed:", error))
+    );
   } else {
     console.warn("Notification permission is not granted.");
   }
 });
 
-// notificationclick event - 알림 클릭 시 URL 이동
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
   event.waitUntil(
