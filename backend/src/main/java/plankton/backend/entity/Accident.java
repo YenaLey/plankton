@@ -1,9 +1,9 @@
 package plankton.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
@@ -14,8 +14,12 @@ public class Accident {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accidentId;
 
+    private double longitude;  // 경도
+    private double latitude;   // 위도
+
     private String title;
 
+    @Lob
     private String content;
 
     private int category; // 0 또는 1
@@ -27,8 +31,11 @@ public class Accident {
     private Event event;
 
     @Builder
-    public Accident(Long accidentId, String title, String content, int category, String img, Event event) {
+    public Accident(Long accidentId, double longitude, double latitude, String title,
+                    String content, int category, String img, Event event) {
         this.accidentId = accidentId;
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.title = title;
         this.content = content;
         this.category = category;

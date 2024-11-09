@@ -8,6 +8,9 @@ import plankton.backend.entity.Event;
 import plankton.backend.repository.AccidentRepository;
 import plankton.backend.repository.EventRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class AccidentService {
 
@@ -25,6 +28,8 @@ public class AccidentService {
                 .orElseThrow(() -> new IllegalArgumentException("Event not found"));
 
         Accident accident = Accident.builder()
+                .longitude(accidentDTO.getLongitude())
+                .latitude(accidentDTO.getLatitude())
                 .title(accidentDTO.getTitle())
                 .content(accidentDTO.getContent())
                 .category(accidentDTO.getCategory())
@@ -33,5 +38,21 @@ public class AccidentService {
                 .build();
 
         accidentRepository.save(accident);
+    }
+
+    @Transactional(readOnly = true)
+    public List<AccidentDTO> getAllAccidents() {
+        return accidentRepository.findAll().stream()
+                .map(accident -> AccidentDTO.builder()
+                        .accidentId(accident.getAccidentId())
+                        .longitude(accident.getLongitude())
+                        .latitude(accident.getLatitude())
+                        .title(accident.getTitle())
+                        .content(accident.getContent())
+                        .category(accident.getCategory())
+                        .img(accident.getImg())
+                        .eventId(accident.getEvent().getEventId())
+                        .build())
+                .collect(Collectors.toList());
     }
 }

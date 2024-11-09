@@ -7,6 +7,8 @@ import lombok.Getter;
 public class AccidentDTO {
 
     private Long accidentId;
+    private double longitude;
+    private double latitude;
     private String title;
     private String content;
     private int category;
@@ -14,8 +16,11 @@ public class AccidentDTO {
     private Long eventId;
 
     @Builder
-    public AccidentDTO(Long accidentId, String title, String content, int category, String img, Long eventId) {
+    public AccidentDTO(Long accidentId, double longitude, double latitude, String title,
+                       String content, int category, String img, Long eventId) {
         this.accidentId = accidentId;
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.title = title;
         this.content = content;
         this.category = category;
