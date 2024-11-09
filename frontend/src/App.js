@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import "@/App.css";
 import Main from "@/pages/Main";
+import List from "@/pages/List";
 import Current from "@/pages/Current";
+import Chat from "@/pages/Chat";
 import registerPushSubscription from "@/services/serviceWorkerRegistration";
 import Notice from "@/pages/Notice";
 import FloatingButton from "@/components/FloatingButton/FloatingButton";
@@ -9,22 +11,14 @@ import FloatingButton from "@/components/FloatingButton/FloatingButton";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function AppContent() {
-  // const navigate = useNavigate();
-  // const location = useLocation();
-
-  // const handleSpot = () => {
-  //   navigate("/main");
-  // };
-
   return (
     <div className="app-container">
-      {/* {location.pathname === "/" && (
-        <button onClick={handleSpot}>go to main</button>
-      )} */}
       <Routes>
+        <Route path="/" element={<List />} />
         <Route path="/main" element={<Main />} />
         <Route path="/notice" element={<Notice />} />
         <Route path="/current" element={<Current />} />
+        <Route path="/chat" element={<Chat />} />
         {/* <Route path="*" element={<Error />} /> */}
       </Routes>
       <FloatingButton />

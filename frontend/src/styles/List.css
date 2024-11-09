@@ -1,0 +1,15 @@
+.list-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.list-item {
+  cursor: pointer;
+}
+
+.list-item:hover {
+  background-color: grey;
+}
