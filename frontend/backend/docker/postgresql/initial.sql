@@ -1,0 +1,4 @@
+-- init/01_init.sql
+CREATE USER magma WITH ENCRYPTED PASSWORD 'magma';
+CREATE DATABASE plankton;
+GRANT ALL PRIVILEGES ON DATABASE plankton TO magma;

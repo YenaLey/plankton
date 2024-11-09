@@ -1,16 +1,38 @@
 .main-container {
-  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* 상단에서부터 정렬 */
+  padding-bottom: 50px; /* 슬라이딩 패널과 겹치지 않도록 여백 추가 */
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
 }
 
 .main-map-box {
   width: 90%;
-  height: 250px;
+  height: 550px;
   margin: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: whitesmoke;
+  z-index: 1; /* 슬라이딩 패널 아래에 위치하도록 설정 */
+}
+
+.main-slide-box {
+  width: 90%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: whitesmoke;
+  overflow: hidden;
+  z-index: 2; /* 슬라이딩 패널이 지도 위로 올라오도록 설정 */
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
 }

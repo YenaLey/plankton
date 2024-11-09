@@ -1,0 +1,58 @@
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: ${SERVER_SERVLET_CONTEXT_PATH:/}
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: ${APP_NAME:AppName}
+    description: ${APP_DESCRIPTION:App Description}
+  jpa:
+    hibernate:
+      ddl-auto: ${DB_DDL_AUTO:update}
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: false
+        format_sql: true
+        globally_quoted_identifiers: true
+    open-in-view: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/plankton
+    username: magma
+    password: magma
+    driver-class-name: org.postgresql.Driver
+
+  jackson:
+    mapper:
+      accept-case-insensitive-enums: true
+
+  docker:
+    compose:
+      lifecycle-management: none
+
+openai:
+  api-key: dummy-key
+  base-url: https://api.openai.com/v1/assistants
+  instructions_magma:
+    search the information from file
+citydata:
+  api:
+    key: "dummy"
+
+springdoc:
+  api-docs:
+    enabled: ${API_DOCS_ENABLED:true}
+    path: /api-docs
+  swagger-ui:
+    enabled: ${SWAGGER_ENABLED:true}
+    operationsSorter: alpha
+    tagsSorter: alpha
+    path: ${SWAGGER_PATH:/swagger-ui}
+  show-actuator: true
+
+image:
+  file-path: http://localhost:8080/img/
