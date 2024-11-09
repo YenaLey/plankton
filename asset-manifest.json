@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/plankton/static/css/main.c9921e2e.css",
-    "main.js": "/plankton/static/js/main.c50be649.js",
+    "main.js": "/plankton/static/js/main.b242f347.js",
     "static/js/453.65b5ec2e.chunk.js": "/plankton/static/js/453.65b5ec2e.chunk.js",
     "index.html": "/plankton/index.html",
     "main.c9921e2e.css.map": "/plankton/static/css/main.c9921e2e.css.map",
-    "main.c50be649.js.map": "/plankton/static/js/main.c50be649.js.map",
+    "main.b242f347.js.map": "/plankton/static/js/main.b242f347.js.map",
     "453.65b5ec2e.chunk.js.map": "/plankton/static/js/453.65b5ec2e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c9921e2e.css",
-    "static/js/main.c50be649.js"
+    "static/js/main.b242f347.js"
   ]
 }
