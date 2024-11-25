@@ -54,4 +54,4 @@
 ## 🔧 기술 스택
 
 - **백엔드:** Spring Boot, OpenAI Assistant API
--
+- **프론트엔드:** Javascript, React
